@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171613">
+  <title>Pipeline Pulse · Build Monitor</title>
+  <link rel="stylesheet" href="styles.css?v=1.4.2">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Pipeline Pulse home">
+      <span class="brand-mark">PP</span>
+      <span class="brand-copy"><strong>Pipeline Pulse</strong><small>BUILD STATUS MONITOR</small></span>
+    </a>
+    <div class="topbar-right">
+      <span class="environment"><i></i>DEVELOPMENT WORKSPACE</span>
+      <span class="top-separator"></span>
+      <span class="clock" id="clock">--:--:--</span>
+      <span class="user-avatar">DP</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="page-heading">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-line"></span>CONTINUOUS INTEGRATION / DELIVERY</div>
+        <h1>Build status at a glance<span>.</span></h1>
+        <p>One clear signal for every pipeline execution.</p>
+      </div>
+      <div class="pipeline-selector">
+        <span class="selector-icon">⌁</span>
+        <span><small>MONITORED PIPELINE</small><strong id="pipeline-name">student-app-pipeline</strong></span>
+        <span class="selector-caret">⌄</span>
+      </div>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel device-panel">
+        <div class="panel-topline">
+          <div><span class="section-label">VIRTUAL STATUS INDICATOR</span><span class="panel-subtitle">Live software device</span></div>
+          <span class="device-tag"><span class="device-dot"></span>SOFTWARE DEVICE</span>
+        </div>
+
+        <div class="status-copy">
+          <span class="status-orb success" id="status-orb"></span>
+          <div>
+            <h2 id="status-title">Build passed</h2>
+            <p id="status-message">The latest observed pipeline execution succeeded.</p>
+          </div>
+        </div>
+
+        <div class="device-visual" aria-label="Virtual ESP32 device connected to an eight segment LED strip">
+          <div class="microcontroller">
+            <div class="pin-row"><i></i><i></i><i></i><i></i></div>
+            <div class="chip-face"><strong>ESP32</strong><small>VIRTUAL DEVICE</small></div>
+            <div class="pin-row bottom"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="wire-pair"><i></i><i></i></div>
+          <div class="led-housing"><div class="led-strip" id="led-strip">
+            <span class="led on"></span><span class="led on"></span><span class="led on"></span><span class="led on"></span>
+            <span class="led on"></span><span class="led on"></span><span class="led on"></span><span class="led on"></span>
+          </div></div>
+        </div>
+
+        <div class="legend">
+          <span><i class="legend-dot passed"></i>Passed</span>
+          <span><i class="legend-dot failed"></i>Failed</span>
+          <span><i class="legend-dot running"></i>Running</span>
+        </div>
+
+        <div class="device-footer">
+          <span id="device-id">pulse-demo</span>
+          <span id="updated-at">--</span>
+        </div>
+      </article>
+
+      <article class="panel control-panel">
+        <div class="section-label">BUILD CONTROL</div>
+        <h2>See the signal change</h2>
+        <p class="control-intro">Run a local sample build and watch the virtual device respond. AWS events are simulated in local mode.</p>
+
+        <label for="sample-app">Sample application</label>
+        <div class="select-wrap">
+          <select id="sample-app">
+            <option value="healthy">Healthy code · expected pass</option>
+            <option value="regression">Introduce regression · expected fail</option>
+            <option value="slow">Long-running checks · expected pass</option>
+          </select>
+        </div>
+
+        <button class="run-button" id="run-build" type="button"><span class="play-icon">▶</span><span id="run-label">Run local build</span></button>
+        <div class="run-caption" id="run-caption">~4 seconds · no AWS account needed</div>
+
+        <div class="transport">
+          <div class="transport-row">
+            <span class="transport-indicator" id="transport-indicator"></span>
+            <div><strong id="transport-title">Local event transport</strong><small id="transport-copy">Same event format as CodePipeline</small></div>
+            <span class="transport-state" id="transport-state">READY</span>
+          </div>
+          <div class="transport-row">
+            <span class="transport-indicator muted"></span>
+            <div><strong>Cloud connection</strong><small id="cloud-copy">Waiting for optional AWS status.json</small></div>
+            <span class="transport-state muted-text" id="cloud-state">OPTIONAL</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="detail-grid">
+      <article class="panel detail-card">
+        <div class="detail-heading"><div><span class="section-label">LATEST EXECUTION</span><h3>Run details</h3></div><span class="status-chip success" id="status-chip">SUCCEEDED</span></div>
+        <div class="detail-stats">
+          <div><small>EXECUTION ID</small><strong id="execution-id">pulse-local-001</strong></div>
+          <div><small>STAGE</small><strong id="stage-name">Deploy</strong></div>
+          <div><small>DURATION</small><strong id="duration">4.0s</strong></div>
+        </div>
+        <div class="stage-progress">
+          <div class="stage-label"><span>PIPELINE STAGES</span><span id="stage-progress-label">4 / 4 complete</span></div>
+          <div class="stage-list" id="stage-list">
+            <span class="stage done">Source</span><span class="stage done">Build</span><span class="stage done">Test</span><span class="stage done">Deploy</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel detail-card test-card">
+        <div class="detail-heading"><div><span class="section-label">LOCAL TEST REPORT</span><h3>Validation checks</h3></div><span class="test-count" id="test-count">3 CHECKS</span></div>
+        <div class="test-list" id="test-list">
+          <div class="test-row"><span class="test-check pass">✓</span><span>Dependency check</span><b>Passed</b></div>
+          <div class="test-row"><span class="test-check pass">✓</span><span>Build compilation</span><b>Passed</b></div>
+          <div class="test-row"><span class="test-check pass">✓</span><span>Smoke test</span><b>Passed</b></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel activity-panel">
+      <div class="activity-heading"><div><span class="section-label">RECENT BUILDS</span><h3>Execution history</h3></div><div class="activity-actions"><select id="history-filter" aria-label="Filter build history"><option value="ALL">All results</option><option value="SUCCEEDED">Passed</option><option value="FAILED">Failed</option><option value="IN_PROGRESS">Running</option></select><span id="history-count">1 RUN</span></div></div>
+      <div class="table-wrap"><table><thead><tr><th>BUILD</th><th>APPLICATION</th><th>STAGE</th><th>TIME</th><th>RESULT</th></tr></thead><tbody id="history-body"><tr><td>pulse-local-001</td><td>Healthy code</td><td>Deploy</td><td>Just now</td><td><span class="table-result passed">PASSED</span></td></tr></tbody></table></div>
+    </section>
+
+    <footer><span>PIPELINE PULSE <b>·</b> V1.4</span><span id="data-source">LOCAL SIMULATION MODE</span><span>STATUS MONITOR</span></footer>
+  </main>
+</div>
+<script src="app.js?v=1.4.2"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "version": "0",
+  "id": "sample-event-001",
+  "detail-type": "CodePipeline Pipeline Execution State Change",
+  "source": "aws.codepipeline",
+  "account": "000000000000",
+  "time": "2026-11-15T00:00:00Z",
+  "region": "us-east-1",
+  "resources": [
+    "arn:aws:codepipeline:us-east-1:000000000000:student-app-pipeline"
+  ],
+  "detail": {
+    "pipeline": "student-app-pipeline",
+    "execution-id": "sample-exec-001",
+    "state": "FAILED",
+    "stage": "Build"
+  }
+}

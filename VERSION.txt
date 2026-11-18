@@ -1,0 +1,3 @@
+Pipeline Pulse Dashboard
+Version: 1.4.2 (state consistency fix)
+Fixes: correct local event state field; normalized pass/fail result; try/finally UI reset; safe history rendering; duplicate/stale cloud status protection.
